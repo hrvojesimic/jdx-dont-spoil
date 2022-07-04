@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Stranger Things without spoilers</title>
+</head>
+<body>
+    <article>
+        <h1 th:text="${article.title}">Stranger Things</h1>
+        <section th:each="section : ${article.sectionList}" th:utext="${section.content}">
+            <p>Stranger Things is an American science fiction horror drama television series
+                created by the Duffer Brothers that is streaming on <b>Netflix</b>.</p>
+            <p>The brothers serve as showrunners and are executive producers along with
+                Shawn Levy and Dan Cohen.
+                The first season of the series was released on Netflix on July 15, 2016.</p>
+        </section>
+        <section th:remove="all">
+            <p>Second, third, and fourth seasons followed in October 2017, July 2019, and May and July 2022, respectively.</p>
+        </section>
+    </article>
+    <p th:each="episode : ${episodes}" th:text="${episode.title}"></p>
+</body>
+</html>
