@@ -18,6 +18,13 @@
             <p>Second, third, and fourth seasons followed in October 2017, July 2019, and May and July 2022, respectively.</p>
         </section>
     </article>
-    <p th:each="episode : ${episodes}" th:text="${episode.title}"></p>
+    <select name="bookmark">
+        <option value="0">-</option>
+        <option th:each="episode : ${episodes}"
+                th:text="${episode.title}"
+                th:value="${episode.orderingNumber}">
+            Naslov epizode
+        </option>
+    </select>
 </body>
 </html>
