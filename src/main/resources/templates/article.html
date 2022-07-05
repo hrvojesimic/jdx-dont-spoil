@@ -6,8 +6,8 @@
 </head>
 <body>
     <article>
-        <h1 th:text="${article.title}">Stranger Things</h1>
-        <section th:each="section : ${article.sectionList}" th:utext="${section.content}">
+        <h1 th:text="${page.title}">Stranger Things</h1>
+        <section th:each="section : ${page.htmlSections}" th:utext="${section}">
             <p>Stranger Things is an American science fiction horror drama television series
                 created by the Duffer Brothers that is streaming on <b>Netflix</b>.</p>
             <p>The brothers serve as showrunners and are executive producers along with
@@ -18,13 +18,17 @@
             <p>Second, third, and fourth seasons followed in October 2017, July 2019, and May and July 2022, respectively.</p>
         </section>
     </article>
-    <select name="bookmark">
-        <option value="0">-</option>
-        <option th:each="episode : ${episodes}"
-                th:text="${episode.title}"
-                th:value="${episode.orderingNumber}">
-            Naslov epizode
-        </option>
-    </select>
+    <form action="/bookmark" method="post" th:object="${bookmarkCommand}">
+        <select name="bookmark"
+                th:field="*{episodeNumber}"
+                onchange="this.form.submit()">
+            <option value="0">-</option>
+            <option th:each="episode : ${episodes}"
+                    th:text="${episode.title}"
+                    th:value="${episode.orderingNumber}">
+                Naslov epizode
+            </option>
+        </select>
+    </form>
 </body>
 </html>

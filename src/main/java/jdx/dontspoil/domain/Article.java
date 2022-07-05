@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * Article in the wiki.
  * An article has a unique title, and body text.
+ * Body text is made up from sections.
  */
 public class Article {
     private String title;
