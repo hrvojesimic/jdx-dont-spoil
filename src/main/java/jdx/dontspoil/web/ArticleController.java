@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.Cookie;
@@ -22,16 +23,18 @@ public class ArticleController {
     @Autowired
     private EpisodeService episodeService;
 
-    @GetMapping("/a")
+    @GetMapping("/a/{reference}")
     public String articlePage(
+            @PathVariable String reference,
             Model model,
             @CookieValue(name="bookmark", defaultValue="0") int bookmark
     ) {
         BookmarkCommand bookmarkCommand = new BookmarkCommand();
         bookmarkCommand.setEpisodeNumber(bookmark);
-        Page page = articleService.getPage(bookmark);
+        Page page = articleService.getPage(reference, bookmark);
         model.addAttribute("page", page);
         model.addAttribute("episodes", episodeService.getAllEpisodes());
+        model.addAttribute("articles", articleService.getAllArticles());
         model.addAttribute("bookmarkCommand", bookmarkCommand);
         return "article";
     }
@@ -40,6 +43,6 @@ public class ArticleController {
     public String bookmark(BookmarkCommand bookmarkCommand, HttpServletResponse response) {
         int bookmark = bookmarkCommand.getEpisodeNumber();
         response.addCookie(new Cookie("bookmark", String.valueOf(bookmark)));
-        return "redirect:/a";
+        return "redirect:/";
     }
 }

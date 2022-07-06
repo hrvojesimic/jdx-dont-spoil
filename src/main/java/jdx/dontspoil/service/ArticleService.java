@@ -3,6 +3,7 @@ package jdx.dontspoil.service;
 import jdx.dontspoil.domain.Article;
 import jdx.dontspoil.domain.Episode;
 import jdx.dontspoil.domain.Section;
+import jdx.dontspoil.repository.ArticleRepository;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -16,6 +17,8 @@ import java.util.List;
 public class ArticleService {
     @Autowired
     private EpisodeService episodeService;
+    @Autowired
+    private ArticleRepository articleRepository;
 
     private Parser parser = Parser.builder().build();
 
@@ -35,8 +38,13 @@ public class ArticleService {
         return article;
     }
 
-    public Page getPage(int bookmark) {
-        Article article = createArticle();
+    public List<Article> getAllArticles() {
+        return articleRepository.findAll();
+    }
+
+    public Page getPage(String articleReference, int bookmark) {
+        String title = articleReference.replaceAll("_", " ");
+        Article article = articleRepository.getByTitle(title);
         Page page = new Page();
         page.setTitle(article.getTitle());
         List<String> htmlSections = new ArrayList<>();

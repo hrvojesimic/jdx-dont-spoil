@@ -30,5 +30,15 @@
             </option>
         </select>
     </form>
+    <nav>
+        <ul>
+            <li th:each="article : ${articles}">
+                <a th:href="${'/a/' + article.reference}"
+                   th:text="${article.title}">
+                    Naziv članka
+                </a>
+            </li>
+        </ul>
+    </nav>
 </body>
 </html>
