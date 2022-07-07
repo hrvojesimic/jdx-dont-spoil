@@ -24,18 +24,8 @@ public class ArticleService {
 
     private HtmlRenderer renderer = HtmlRenderer.builder().build();
 
-    public Article createArticle() {
-        List<Episode> episodes = episodeService.getAllEpisodes();
-        Article article = new Article();
-        article.setTitle("NASLOV KOJI SMO POSTAVILI PROGRAMSKI");
-        Section s1 = new Section();
-        s1.setContent("**Boldani tekst** običan tekst \n - prva\n - druga");
-        s1.setShowFrom(episodes.get(1));
-        Section s2 = new Section();
-        s2.setContent("![](https://s7d2.scene7.com/is/image/PetSmart/WEB-1262551-Apr22_BSB-LOGO_StrangerThings_MO?fmt=png-alpha)");
-        s2.setShowFrom(episodes.get(3));
-        article.setSectionList(List.of(s1, s2));
-        return article;
+    public Article createArticle(Article article) {
+        return articleRepository.save(article);
     }
 
     public List<Article> getAllArticles() {
@@ -45,6 +35,9 @@ public class ArticleService {
     public Page getPage(String articleReference, int bookmark) {
         String title = articleReference.replaceAll("_", " ");
         Article article = articleRepository.getByTitle(title);
+        if (article == null) {
+            return null;
+        }
         Page page = new Page();
         page.setTitle(article.getTitle());
         List<String> htmlSections = new ArrayList<>();

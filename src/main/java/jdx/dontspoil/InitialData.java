@@ -1,5 +1,7 @@
 package jdx.dontspoil;
 
+import com.thedeanda.lorem.Lorem;
+import com.thedeanda.lorem.LoremIpsum;
 import jdx.dontspoil.domain.Article;
 import jdx.dontspoil.domain.Episode;
 import jdx.dontspoil.domain.Section;
@@ -24,6 +26,8 @@ public class InitialData {
     @Autowired
     private ArticleRepository articleRepository;
 
+    private Lorem lorem = LoremIpsum.getInstance();
+
     private static List<String> EPISODES = List.of(
             "The Vanishing of Will Byers", "The Weirdo on Maple Street",
             "Holly, Jolly", "The Body", "The Flea and the Acrobat",
@@ -39,7 +43,12 @@ public class InitialData {
             episodeRepository.save(episode);
             Article episodeArticle = new Article();
             episodeArticle.setTitle(title);
-            episodeArticle.setSectionList(new ArrayList<>());
+            Section s = new Section();
+            String paragraphs = lorem.getParagraphs(1, 3);
+            paragraphs = paragraphs.replaceAll("\n", "\n\n");
+            s.setContent(paragraphs);
+            s.setShowFrom(episode);
+            episodeArticle.setSectionList(List.of(s));
             articleRepository.save(episodeArticle);
         }
     }
@@ -56,7 +65,7 @@ public class InitialData {
         Article homeArticle = new Article();
         homeArticle.setTitle("Stranger Things");
         Section s1 = new Section();
-        s1.setContent("**Stranger Things** is an American science fiction horror drama television series created by the Duffer Brothers that is streaming on Netflix. The brothers serve as showrunners and are executive producers along with Shawn Levy and Dan Cohen. The first season of the series was released on Netflix on July 15, 2016");
+        s1.setContent("**Stranger Things** is an American science fiction horror drama television series created by the [Duffer Brothers](/a/Duffer_Brothers) that is streaming on Netflix. The brothers serve as showrunners and are executive producers along with Shawn Levy and Dan Cohen. The first season of the series was released on Netflix on July 15, 2016");
         s1.setShowFrom(episodes.get(0));
         Section s2 = new Section();
         s2.setContent("![](https://upload.wikimedia.org/wikipedia/commons/3/38/Stranger_Things_logo.png)");

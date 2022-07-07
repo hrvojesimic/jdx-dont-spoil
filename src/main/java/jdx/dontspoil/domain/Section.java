@@ -14,7 +14,7 @@ public class Section {
     @GeneratedValue
     private Integer id;
 
-    @Size(max = 1000)
+    @Size(max = 50_000)
     private String content;
 
     @ManyToOne

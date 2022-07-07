@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @Controller
 public class ArticleController {
@@ -32,6 +33,12 @@ public class ArticleController {
         BookmarkCommand bookmarkCommand = new BookmarkCommand();
         bookmarkCommand.setEpisodeNumber(bookmark);
         Page page = articleService.getPage(reference, bookmark);
+        if (page == null) {
+            Article article = new Article();
+            article.setTitle(reference.replaceAll("_", " "));
+            model.addAttribute("article", article);
+            return "createArticle";
+        }
         model.addAttribute("page", page);
         model.addAttribute("episodes", episodeService.getAllEpisodes());
         model.addAttribute("articles", articleService.getAllArticles());
@@ -44,5 +51,21 @@ public class ArticleController {
         int bookmark = bookmarkCommand.getEpisodeNumber();
         response.addCookie(new Cookie("bookmark", String.valueOf(bookmark)));
         return "redirect:/";
+    }
+
+    @GetMapping("/a")
+    public String newArticleForm(Model model) {
+        Article article = new Article();
+        article.setTitle("");
+        article.setSectionList(List.of());
+        model.addAttribute("article", article);
+        return "createArticle";
+    }
+
+    @PostMapping("/a")
+    public String createArticle(Article article) {
+        article.setSectionList(List.of());
+        articleService.createArticle(article);
+        return "redirect:/a/" + article.getReference();
     }
 }
