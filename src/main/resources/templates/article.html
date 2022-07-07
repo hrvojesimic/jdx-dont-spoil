@@ -3,44 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Stranger Things without spoilers</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/styles/styles.css" th:href="@{/styles/styles.css}">
 </head>
-<body class="background">
-    <article>
-        <h1 th:text="${page.title}">Stranger Things</h1>
-        <section th:each="section : ${page.htmlSections}" th:utext="${section}">
-            <p>Stranger Things is an American science fiction horror drama television series
-                created by the Duffer Brothers that is streaming on <b>Netflix</b>.</p>
-            <p>The brothers serve as showrunners and are executive producers along with
-                Shawn Levy and Dan Cohen.
-                The first season of the series was released on Netflix on July 15, 2016.</p>
-        </section>
-        <section th:remove="all">
-            <p>Second, third, and fourth seasons followed in October 2017, July 2019, and May and July 2022, respectively.</p>
-        </section>
-    </article>
-    <form action="/bookmark" method="post" th:object="${bookmarkCommand}">
-        <select name="bookmark"
-                th:field="*{episodeNumber}"
-                onchange="this.form.submit()">
-            <option value="0">-</option>
-            <option th:each="episode : ${episodes}"
-                    th:text="${episode.title}"
-                    th:value="${episode.orderingNumber}">
-                Naslov epizode
-            </option>
-        </select>
-    </form>
-    <nav>
+<body class="background text-white d-flex">
+    <nav class="nav-size bg-dark d-flex flex-column align-items-center">
+        <img class="logo-size" src="../static/assets/stranger-things-logo.png"
+             th:src="@{/assets/stranger-things-logo.png}">
+
+        <hr>
         <ul>
-            <li th:each="article : ${articles}">
-                <a th:href="${'/a/' + article.reference}"
-                   th:text="${article.title}">
-                    Naziv članka
-                </a>
-            </li>
-        </ul>
+        <li class="list-group-item" th:each="article : ${articles}">
+            <a class="text-decoration-none text-white" th:href="${'/a/' + article.reference}"
+               th:text="${article.title}">
+                Naziv članka
+            </a>
+        </li>
+    </ul>
     </nav>
-    <a href="/a">Create New Article</a>
+    <main class="w-100 d-flex main-gap flex-column">
+        <header class="d-flex justify-content-between align-items-center m-4">
+            <a class="btn btn-outline-light" href="/a">Create New Article</a>
+            <form action="/bookmark" method="post" th:object="${bookmarkCommand}">
+                <select class="btn btn-danger" name="bookmark"
+                        th:field="*{episodeNumber}"
+                        onchange="this.form.submit()">
+                    <option value="0">-</option>
+                    <option class="dropdown-item" th:each="episode : ${episodes}"
+                            th:text="${episode.title}"
+                            th:value="${episode.orderingNumber}">
+                        Naslov epizode
+                    </option>
+                </select>
+            </form>
+        </header>
+
+        <article class="m-4">
+            <h1 class="strange-font pb-4" th:text="${page.title}">Stranger Things</h1>
+            <section th:each="section : ${page.htmlSections}" th:utext="${section}">
+                <p>Stranger Things is an American science fiction horror drama television series
+                    created by the Duffer Brothers that is streaming on <b>Netflix</b>.</p>
+                <p>The brothers serve as showrunners and are executive producers along with
+                    Shawn Levy and Dan Cohen.
+                    The first season of the series was released on Netflix on July 15, 2016.</p>
+            </section>
+            <section th:remove="all">
+                <p>Second, third, and fourth seasons followed in October 2017, July 2019, and May and July 2022, respectively.</p>
+            </section>
+        </article>
+    </main>
 </body>
 </html>
