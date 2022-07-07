@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Stranger Things without spoilers</title>
+    <link rel="stylesheet" href="../static/styles/styles.css" th:href="@{/styles/styles.css}">
 </head>
-<body>
+<body class="background">
     <article>
         <h1 th:text="${page.title}">Stranger Things</h1>
         <section th:each="section : ${page.htmlSections}" th:utext="${section}">
