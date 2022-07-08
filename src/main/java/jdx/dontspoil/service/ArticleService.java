@@ -39,6 +39,7 @@ public class ArticleService {
             return null;
         }
         Page page = new Page();
+        page.setArticleId(article.getId());
         page.setTitle(article.getTitle());
         List<String> htmlSections = new ArrayList<>();
         for (Section section: article.getSectionList()) {
@@ -52,5 +53,9 @@ public class ArticleService {
         }
         page.setHtmlSections(htmlSections);
         return page;
+    }
+
+    public Article getArticle(Integer articleId) {
+        return articleRepository.findById(articleId).get();
     }
 }

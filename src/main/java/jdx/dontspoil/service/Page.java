@@ -8,6 +8,7 @@ import java.util.List;
  * Title is the same as in the article.
  */
 public class Page {
+    private Integer articleId;
     private String title;
     private List<String> htmlSections;
 
@@ -25,5 +26,13 @@ public class Page {
 
     public void setHtmlSections(List<String> htmlSections) {
         this.htmlSections = htmlSections;
+    }
+
+    public Integer getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 }

@@ -6,6 +6,7 @@
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/styles/styles.css" th:href="@{/styles/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="background text-white d-flex">
     <nav class="nav-size bg-dark d-flex flex-column align-items-center">
@@ -41,7 +42,11 @@
 
         <article class="m-4">
             <h1 class="strange-font pb-4" th:text="${page.title}">Stranger Things</h1>
-            <a class="btn btn-outline-light" href="/section/insert">Insert New Section</a>
+            <a class="btn btn-outline-light"
+               th:href="${'/section/insert/' + page.articleId}">
+                <i class="fa fa-plus me-2"></i>
+                Insert New Section
+            </a>
 
             <section th:each="section : ${page.htmlSections}" th:utext="${section}">
                 <p>Stranger Things is an American science fiction horror drama television series

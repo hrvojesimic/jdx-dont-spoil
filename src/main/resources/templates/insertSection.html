@@ -9,8 +9,23 @@
 </head>
 <body class="background text-white d-flex flex-column justify-content-center align-items-center full-size">
     <h1>Insert new section</h1>
-    <form class="d-flex flex-column" method="post" action="/section/insert">
-        <textarea rows="10" cols="100">Text of section</textarea>
+    <form class="d-flex flex-column main-gap"
+          th:object="${command}"
+          method="post" action="/section/insert">
+        <input type="hidden" th:field="*{articleId}">
+        <input type="hidden" th:field="*{position}">
+        <textarea rows="10" cols="100" name="sectionContent"
+                  th:field="*{sectionContent}">
+            Text of section
+        </textarea>
+        <select class="btn btn-danger" name="showFrom" th:field="*{showFrom}">
+            <option class="dropdown-item"
+                    th:each="episode : ${episodes}"
+                    th:text="${episode.title}"
+                    th:value="${episode.id}">
+                Naslov epizode
+            </option>
+        </select>
         <input class="btn btn-outline-light" type="submit" value="Insert">
     </form>
 </body>
