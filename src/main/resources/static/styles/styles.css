@@ -30,3 +30,8 @@
     width: 100vw;
 }
 
+textarea {
+    background-color: rgba(30, 30, 30, 0.7);
+    color: white;
+    padding: 10px;
+}

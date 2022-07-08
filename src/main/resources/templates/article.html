@@ -41,6 +41,8 @@
 
         <article class="m-4">
             <h1 class="strange-font pb-4" th:text="${page.title}">Stranger Things</h1>
+            <a class="btn btn-outline-light" href="/section/insert">Insert New Section</a>
+
             <section th:each="section : ${page.htmlSections}" th:utext="${section}">
                 <p>Stranger Things is an American science fiction horror drama television series
                     created by the Duffer Brothers that is streaming on <b>Netflix</b>.</p>
